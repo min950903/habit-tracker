@@ -3,18 +3,6 @@ import Habit from "./habit";
 import InputField from "./inputField";
 
 class Habits extends Component {
-  onHabitIncrement = (habit) => {
-    this.props.onHabitIncrement(habit);
-  };
-
-  onHabitDecrement = (habit) => {
-    this.props.onHabitDecrement(habit);
-  };
-
-  onHabitDelete = (habit) => {
-    this.props.onHabitDelete(habit);
-  };
-
   onAddHabbit = (name) => {
     this.props.onAddHabbit(name);
   };
@@ -32,9 +20,9 @@ class Habits extends Component {
             <Habit
               key={habit.id}
               habit={habit}
-              onHabitIncrement={this.onHabitIncrement}
-              onHabitDecrement={this.onHabitDecrement}
-              onHabitDelete={this.onHabitDelete}
+              onHabitIncrement={this.props.onHabitIncrement}
+              onHabitDecrement={this.props.onHabitDecrement}
+              onHabitDelete={this.props.onHabitDelete}
             />
           ))}
         </ul>

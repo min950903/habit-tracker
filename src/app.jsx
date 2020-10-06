@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./app.css";
 import Habits from "./components/habits";
-import NavBar from "./components/navBar";
+import NavBar from "./components/navbar";
 
 class App extends Component {
   state = {
@@ -17,11 +17,6 @@ class App extends Component {
     const habits = [...this.state.habits];
     const idx = habits.indexOf(habit);
 
-    if (habits[idx].count === 0) {
-      const navCount = this.state.navCount;
-      this.setState({ navCount: navCount + 1 });
-    }
-
     habits[idx].count++;
     this.setState({ habits });
   };
@@ -30,11 +25,6 @@ class App extends Component {
     const habits = [...this.state.habits];
     const idx = habits.indexOf(habit);
 
-    if (habits[idx].count === 1) {
-      const navCount = this.state.navCount;
-      this.setState({ navCount: navCount - 1 });
-    }
-
     habits[idx].count = habits[idx].count <= 0 ? 0 : habits[idx].count - 1;
     this.setState(habits);
   };
@@ -42,9 +32,6 @@ class App extends Component {
   onHabitDelete = (habit) => {
     const habits = this.state.habits.filter((item) => item.id !== habit.id);
     this.setState({ habits });
-
-    const navCount = this.state.navCount;
-    this.setState({ navCount: navCount - 1 });
   };
 
   onAddHabbit = (name) => {
@@ -63,7 +50,9 @@ class App extends Component {
   render() {
     return (
       <>
-        <NavBar navCount={this.state.navCount} /> <br />
+        <NavBar
+          navCount={this.state.habits.filter((habit) => habit.count > 0).length}
+        />
         <Habits
           habits={this.state.habits}
           onHabitIncrement={this.onHabitIncrement}
