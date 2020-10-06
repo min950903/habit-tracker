@@ -3,18 +3,11 @@ import Habit from "./habit";
 import InputField from "./inputField";
 
 class Habits extends Component {
-  onAddHabbit = (name) => {
-    this.props.onAddHabbit(name);
-  };
-
-  onResetAll = () => {
-    this.props.onResetAll();
-  };
-
   render() {
+    console.log("habits");
     return (
       <>
-        <InputField onAddHabbit={this.onAddHabbit} /> <br />
+        <InputField onAddHabbit={this.props.onAddHabbit} /> <br />
         <ul>
           {this.props.habits.map((habit) => (
             <Habit
@@ -26,7 +19,7 @@ class Habits extends Component {
             />
           ))}
         </ul>
-        <button className="habit-button" onClick={this.onResetAll}>
+        <button className="habit-reset" onClick={this.props.onResetAll}>
           Reset All
         </button>
       </>

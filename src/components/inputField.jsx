@@ -1,29 +1,30 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
-class InputField extends Component {
-  state = {
-    inputValue: "",
-  };
+class InputField extends PureComponent {
+  inputRef = React.createRef();
 
-  onAddHabbit = () => {
-    this.props.onAddHabbit(this.state.inputValue);
-    const inputValue = "";
-    this.setState({ inputValue });
-  };
+  onAddHabbit = (event) => {
+    event.preventDefault();
 
-  onHabitChange = (event) => {
-    const inputValue = event.target.value;
-    this.setState({ inputValue });
+    const name = this.inputRef.current.value;
+    name && this.props.onAddHabbit(this.inputRef.current.value);
+
+    this.inputRef.current.value = "";
   };
 
   render() {
+    console.log("input field");
     return (
-      <>
-        <input placeholder="habit" name="habit" onChange={this.onHabitChange} />
-        <button className="habit-button" onClick={this.onAddHabbit}>
-          Add
-        </button>
-      </>
+      <form className="add-form" onSubmit={this.onAddHabbit}>
+        <input
+          type="text"
+          className="add-input"
+          name="habit"
+          ref={this.inputRef}
+          placeholder="habit"
+        />
+        <button className="add-button">Add</button>
+      </form>
     );
   }
 }

@@ -10,23 +10,31 @@ class App extends Component {
       { id: 2, name: "Sleeping", count: 0 },
       { id: 3, name: "Coding", count: 0 },
     ],
-    navCount: 0,
   };
 
   onHabitIncrement = (habit) => {
-    const habits = [...this.state.habits];
-    const idx = habits.indexOf(habit);
+    const habits = this.state.habits.map((item) => {
+      if (item.id === habit.id) {
+        return { ...item, count: item.count + 1 };
+      }
 
-    habits[idx].count++;
+      return item;
+    });
+
     this.setState({ habits });
   };
 
   onHabitDecrement = (habit) => {
-    const habits = [...this.state.habits];
-    const idx = habits.indexOf(habit);
+    const habits = this.state.habits.map((item) => {
+      if (item.id === habit.id) {
+        const count = item.count - 1;
+        return { ...item, count: count <= 0 ? 0 : count };
+      }
 
-    habits[idx].count = habits[idx].count <= 0 ? 0 : habits[idx].count - 1;
-    this.setState(habits);
+      return item;
+    });
+
+    this.setState({ habits });
   };
 
   onHabitDelete = (habit) => {
@@ -35,19 +43,24 @@ class App extends Component {
   };
 
   onAddHabbit = (name) => {
-    const habits = [...this.state.habits];
-    habits.push({ id: habits.length + 1, name: name, count: 0 });
+    const habits = [...this.state.habits, { id: Date.now(), name, count: 0 }];
     this.setState({ habits });
   };
 
   onResetAll = () => {
-    const habits = [...this.state.habits];
-    const resetHabits = habits.map((habit) => (habit.count = 0));
-    this.setState({ habtis: resetHabits });
-    this.setState({ navCount: 0 });
+    const habits = this.state.habits.map((habit) => {
+      if (habit.count !== 0) {
+        return { ...habit, count: 0 };
+      }
+
+      return habit;
+    });
+
+    this.setState({ habits });
   };
 
   render() {
+    console.log("app");
     return (
       <>
         <NavBar
