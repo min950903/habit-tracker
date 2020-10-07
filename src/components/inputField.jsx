@@ -1,32 +1,30 @@
-import React, { PureComponent } from "react";
+import React from "react";
+import { memo } from "react";
 
-class InputField extends PureComponent {
-  inputRef = React.createRef();
+const InputField = memo((props) => {
+  const inputRef = React.createRef();
 
-  onAddHabbit = (event) => {
+  const onAddHabbit = (event) => {
     event.preventDefault();
 
-    const name = this.inputRef.current.value;
-    name && this.props.onAddHabbit(this.inputRef.current.value);
+    const name = inputRef.current.value;
+    name && props.onAddHabbit(inputRef.current.value);
 
-    this.inputRef.current.value = "";
+    inputRef.current.value = "";
   };
 
-  render() {
-    console.log("input field");
-    return (
-      <form className="add-form" onSubmit={this.onAddHabbit}>
-        <input
-          type="text"
-          className="add-input"
-          name="habit"
-          ref={this.inputRef}
-          placeholder="habit"
-        />
-        <button className="add-button">Add</button>
-      </form>
-    );
-  }
-}
+  return (
+    <form className="add-form" onSubmit={onAddHabbit}>
+      <input
+        type="text"
+        className="add-input"
+        name="habit"
+        ref={inputRef}
+        placeholder="habit"
+      />
+      <button className="add-button">Add</button>
+    </form>
+  );
+});
 
 export default InputField;
